@@ -17,6 +17,6 @@ public interface Connection {
 
     String getProtocol();
 
-    void setProtocol();
-
+    void setProtocol(String protocol);
+    
 }

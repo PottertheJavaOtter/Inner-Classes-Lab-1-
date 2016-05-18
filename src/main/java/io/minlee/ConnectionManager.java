@@ -106,8 +106,8 @@ public class ConnectionManager {
             return protocol;
         }
 
-        public void setProtocol() {
-
+        public void setProtocol(String protocol) {
+            this.protocol = protocol;
         }
     }
 }
