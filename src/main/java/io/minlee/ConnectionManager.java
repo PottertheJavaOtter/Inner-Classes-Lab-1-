@@ -71,23 +71,33 @@ public class ConnectionManager {
 
         private String ip, protocol;
         private int port;
+        private boolean connection;
 
         public ManagedConnection(String ip, int port){
             this.ip = ip;
             protocol = "HTTP";
             this.port = port;
+            connection = true;
         }
         public ManagedConnection(String ip, String protocol, int port){
             this.ip = ip;
             this.protocol = protocol;
             this.port = port;
+            connection = true;
+
         }
         public String connect() {
-            return "connected";
+            if (connection) {
+                return "connected";
+            }
+            return "Error - connection close";
         }
 
         public String getIP() {
-            return ip;
+            if (connection) {
+                return ip;
+            }
+            return "Error - connection close";
         }
 
         public void setIP(String ip) {
@@ -95,7 +105,10 @@ public class ConnectionManager {
         }
 
         public int getPort() {
-            return port;
+            if (connection) {
+                return port;
+            }
+            return 0;
         }
 
         public void setPort(int port) {
@@ -103,11 +116,18 @@ public class ConnectionManager {
         }
 
         public String getProtocol() {
-            return protocol;
+            if (connection) {
+                return protocol;
+            }
+            return "Error - connection close";
         }
 
         public void setProtocol(String protocol) {
             this.protocol = protocol;
+        }
+        public void close(){
+            connection = false;
+            numOfConnections--;
         }
     }
 }

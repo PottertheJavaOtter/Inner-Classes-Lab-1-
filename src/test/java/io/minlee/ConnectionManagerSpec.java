@@ -59,4 +59,22 @@ public class ConnectionManagerSpec {
         Connection customConnection = connectionManager.getConnection("300.300.300.300","WIFI", 10);
         assertNull(connectionManager.getConnection("400.400.400.400","TELNET"));
     }
+    @Test
+    public void closeConnectionTest(){
+        ConnectionManager connectionManager = new ConnectionManager(3);
+        Connection ftpConnection = connectionManager.getConnection("100.100.100.100","FTP");
+        Connection httpConnection = connectionManager.getConnection("200.200.200.200",80);
+        Connection customConnection = connectionManager.getConnection("300.300.300.300","WIFI", 10);
+        String expectedIp = "Error - connection close";
+        ftpConnection.close();
+        int expectedPort = 0;
+        String expectedProtocol = "Error - connection close";
+        String actualIP = ftpConnection.getIP();
+        int actualPort = ftpConnection.getPort();
+        String actualProtocol = ftpConnection.getProtocol();
+        assertEquals(expectedIp,actualIP);
+        assertEquals(expectedPort,actualPort);
+        assertEquals(expectedProtocol,actualProtocol);
+        assertNotNull(connectionManager.getConnection("400.400.400.400","TELNET"));
+    }
 }
